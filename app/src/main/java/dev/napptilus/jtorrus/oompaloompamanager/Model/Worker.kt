@@ -14,9 +14,9 @@ data class Worker(
         @Expose
         var lastName: String? = null,
 
-        /*@SerializedName("favorite")
+        @SerializedName("favorite")
         @Expose
-        var favorite: List<Any>? = null,*/
+        var favorite: HashMap<String, String>? = null,
 
         @SerializedName("gender")
         @Expose

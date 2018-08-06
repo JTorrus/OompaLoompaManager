@@ -15,6 +15,7 @@ import dev.napptilus.jtorrus.oompaloompamanager.Model.Worker
 import dev.napptilus.jtorrus.oompaloompamanager.Model.WorkerResponse
 import dev.napptilus.jtorrus.oompaloompamanager.R
 import dev.napptilus.jtorrus.oompaloompamanager.Utils.PaginationScrollListener
+import dev.napptilus.jtorrus.oompaloompamanager.Utils.RecyclerItemDivider
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -46,6 +47,7 @@ class MainActivity : AppCompatActivity() {
 
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.itemAnimator = DefaultItemAnimator()
+        recyclerView.addItemDecoration(RecyclerItemDivider(applicationContext))
         recyclerView.adapter = adapter
 
         recyclerView.addOnScrollListener(object : PaginationScrollListener(linearLayoutManager) {
