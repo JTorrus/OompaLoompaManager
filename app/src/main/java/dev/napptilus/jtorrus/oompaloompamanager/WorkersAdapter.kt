@@ -3,6 +3,7 @@ package dev.napptilus.jtorrus.oompaloompamanager
 import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
+import dev.napptilus.jtorrus.oompaloompamanager.Model.Worker
 
 class WorkersAdapter(val workers: ArrayList<Worker>) : RecyclerView.Adapter<WorkersAdapter.Companion.WorkersViewHolder>() {
 
