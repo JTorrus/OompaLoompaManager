@@ -57,7 +57,7 @@ class PaginationAdapter(val context: Context) : RecyclerView.Adapter<RecyclerVie
             val workerViewHolder = holder as WorkerViewHolder
 
             workerViewHolder.name.text = "${result.firstName} ${result.lastName}"
-            workerViewHolder.age.text = result.age.toString()
+            workerViewHolder.age.text = result.profession.toString()
             workerViewHolder.country.text = result.country
 
             Glide
@@ -86,7 +86,7 @@ class PaginationAdapter(val context: Context) : RecyclerView.Adapter<RecyclerVie
         notifyItemInserted(workerResults.size - 1)
     }
 
-    fun addAll(moveResults: ArrayList<Worker>) {
+    fun addAll(moveResults: List<Worker>) {
         for (result in moveResults) {
             add(result)
         }
@@ -136,7 +136,7 @@ class PaginationAdapter(val context: Context) : RecyclerView.Adapter<RecyclerVie
         var thumbnail: CircleImageView = itemView.item_thumbnail
         var name: TextView = itemView.item_name
         var country: TextView = itemView.item_country
-        var age: TextView = itemView.item_age
+        var age: TextView = itemView.item_profession
     }
 
     class LoadingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)

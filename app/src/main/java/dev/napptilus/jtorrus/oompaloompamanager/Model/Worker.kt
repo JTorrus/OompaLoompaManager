@@ -1,52 +1,52 @@
 package dev.napptilus.jtorrus.oompaloompamanager.Model
 
+import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class Worker() {
-    @SerializedName("first_name")
-    var firstName: String = ""
+data class Worker(
+        var type: String = "Worker",
 
-    @SerializedName("last_name")
-    var lastName: String = ""
+        @SerializedName("first_name")
+        @Expose
+        var firstName: String? = null,
 
-    @SerializedName("favorite")
-    var favorite: ArrayList<String> = ArrayList()
+        @SerializedName("last_name")
+        @Expose
+        var lastName: String? = null,
 
-    @SerializedName("gender")
-    var gender: String = ""
+        /*@SerializedName("favorite")
+        @Expose
+        var favorite: List<Any>? = null,*/
 
-    @SerializedName("image")
-    var image: String = ""
+        @SerializedName("gender")
+        @Expose
+        var gender: String? = null,
 
-    @SerializedName("profession")
-    var profession: String = ""
+        @SerializedName("image")
+        @Expose
+        var image: String? = null,
 
-    @SerializedName("email")
-    var email: String = ""
+        @SerializedName("profession")
+        @Expose
+        var profession: String? = null,
 
-    @SerializedName("age")
-    var age: Int = 0
+        @SerializedName("email")
+        @Expose
+        var email: String? = null,
 
-    @SerializedName("country")
-    var country: String = ""
+        @SerializedName("age")
+        @Expose
+        var age: Int? = null,
 
-    @SerializedName("height")
-    var height: Int = 0
+        @SerializedName("country")
+        @Expose
+        var country: String? = null,
 
-    @SerializedName("id")
-    var id: Int = 0
+        @SerializedName("height")
+        @Expose
+        var height: Int? = null,
 
-    constructor(firstName: String, lastName: String, favorite: ArrayList<String>, gender: String, image: String, profession: String, email: String, age: Int, country: String, height: Int, id: Int): this() {
-        this.firstName = firstName
-        this.lastName = lastName
-        this.favorite = favorite
-        this.gender = gender
-        this.image = image
-        this.profession = profession
-        this.email = email
-        this.age = age
-        this.country = country
-        this.height = height
-        this.id = id
-    }
-}
+        @SerializedName("id")
+        @Expose
+        var id: Int? = null
+)
