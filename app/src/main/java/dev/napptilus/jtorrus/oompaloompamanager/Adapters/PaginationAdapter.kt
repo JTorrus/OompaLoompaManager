@@ -56,7 +56,7 @@ class PaginationAdapter(val context: Context) : RecyclerView.Adapter<RecyclerVie
         if (getItemViewType(position) == ITEM) {
             val workerViewHolder = holder as WorkerViewHolder
 
-            workerViewHolder.name.text = "${result.firstName} ${result.lastName}"
+            workerViewHolder.name.text = context.getString(R.string.full_name, "${result.firstName}", "${result.lastName}")
             workerViewHolder.age.text = result.profession.toString()
             workerViewHolder.country.text = result.country
 
@@ -89,15 +89,6 @@ class PaginationAdapter(val context: Context) : RecyclerView.Adapter<RecyclerVie
     fun addAll(moveResults: List<Worker>) {
         for (result in moveResults) {
             add(result)
-        }
-    }
-
-    fun remove(worker: Worker) {
-        val position = workerResults.indexOf(worker)
-
-        if (position > -1) {
-            workerResults.remove(worker)
-            notifyItemRemoved(position)
         }
     }
 
