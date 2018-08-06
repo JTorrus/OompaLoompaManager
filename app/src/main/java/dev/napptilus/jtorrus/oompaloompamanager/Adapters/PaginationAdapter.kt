@@ -101,18 +101,6 @@ class PaginationAdapter(val context: Context) : RecyclerView.Adapter<RecyclerVie
         }
     }
 
-    fun clear() {
-        isLoadingAdded = false
-
-        while (itemCount > 0) {
-            remove(getItem(0))
-        }
-    }
-
-    fun isEmpty(): Boolean {
-        return itemCount == 0
-    }
-
     fun addLoadingFooter() {
         isLoadingAdded = true
         add(Worker())
