@@ -4,8 +4,6 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class Worker(
-        var type: String = "Worker",
-
         @SerializedName("first_name")
         @Expose
         var firstName: String? = null,

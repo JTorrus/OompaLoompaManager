@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView.addItemDecoration(RecyclerItemDivider(applicationContext))
         recyclerView.adapter = adapter
 
-        recyclerView.addOnScrollListener(object : PaginationScrollListener(linearLayoutManager) {
+        recyclerView.addOnScrollListener(object : PaginationScrollListener(filter_button, linearLayoutManager) {
             override fun isLoading(): Boolean {
                 return isLoading
             }
@@ -74,6 +74,11 @@ class MainActivity : AppCompatActivity() {
         service = Client.getClient()!!.create(Service::class.java)
 
         loadFirstPage()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        callWorkers().cancel()
     }
 
     private fun loadFirstPage() {

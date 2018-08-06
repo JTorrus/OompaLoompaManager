@@ -25,6 +25,15 @@ class PaginationAdapter(val context: Context) : RecyclerView.Adapter<RecyclerVie
     companion object {
         private val ITEM = 0
         private val LOADING = 1
+
+        class WorkerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+            var thumbnail: CircleImageView = itemView.item_thumbnail
+            var name: TextView = itemView.item_name
+            var country: TextView = itemView.item_country
+            var age: TextView = itemView.item_profession
+        }
+
+        class LoadingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -110,13 +119,4 @@ class PaginationAdapter(val context: Context) : RecyclerView.Adapter<RecyclerVie
     fun getItem(position: Int): Worker {
         return workerResults[position]
     }
-
-    class WorkerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var thumbnail: CircleImageView = itemView.item_thumbnail
-        var name: TextView = itemView.item_name
-        var country: TextView = itemView.item_country
-        var age: TextView = itemView.item_profession
-    }
-
-    class LoadingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 }
