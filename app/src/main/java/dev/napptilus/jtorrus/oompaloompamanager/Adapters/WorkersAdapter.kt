@@ -1,4 +1,4 @@
-package dev.napptilus.jtorrus.oompaloompamanager
+package dev.napptilus.jtorrus.oompaloompamanager.Adapters
 
 import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.RecyclerView
