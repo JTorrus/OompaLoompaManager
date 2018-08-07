@@ -1,5 +1,7 @@
 package dev.napptilus.jtorrus.oompaloompamanager.activities
 
+import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DefaultItemAnimator
@@ -8,18 +10,20 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
+import dev.napptilus.jtorrus.oompaloompamanager.R
 import dev.napptilus.jtorrus.oompaloompamanager.adapters.PaginationAdapter
 import dev.napptilus.jtorrus.oompaloompamanager.api.Client
 import dev.napptilus.jtorrus.oompaloompamanager.api.Service
 import dev.napptilus.jtorrus.oompaloompamanager.model.Worker
 import dev.napptilus.jtorrus.oompaloompamanager.model.WorkerResponse
-import dev.napptilus.jtorrus.oompaloompamanager.R
 import dev.napptilus.jtorrus.oompaloompamanager.utils.PaginationScrollListener
 import dev.napptilus.jtorrus.oompaloompamanager.utils.RecyclerItemDivider
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.error_layout.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.concurrent.TimeoutException
 
 class MainActivity : AppCompatActivity() {
     private val pageStart = 1
@@ -75,6 +79,11 @@ class MainActivity : AppCompatActivity() {
         service = Client.getClient()!!.create(Service::class.java)
 
         loadFirstPage()
+
+        error_btn_retry.setOnClickListener {
+            progressBar.visibility = View.VISIBLE
+            loadFirstPage()
+        }
     }
 
     override fun onStop() {
@@ -85,13 +94,15 @@ class MainActivity : AppCompatActivity() {
     private fun loadFirstPage() {
         callWorkers().enqueue(object : Callback<WorkerResponse> {
             override fun onFailure(call: Call<WorkerResponse>?, t: Throwable?) {
-                Log.e("Error", t!!.message)
+                progressBar.visibility = View.GONE
+                showErrorLayout(t!!)
             }
 
             override fun onResponse(call: Call<WorkerResponse>?, response: Response<WorkerResponse>?) {
                 val results: List<Worker> = fetchResults(response!!)
 
                 progressBar.visibility = View.GONE
+                hideErrorLayout()
                 adapter.addAll(results)
 
                 if (currentPage <= pageEnd) {
@@ -101,6 +112,38 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    private fun showErrorLayout(throwable: Throwable) {
+        if (error_layout.visibility == View.GONE) {
+            recyclerView.visibility = View.GONE
+            filter_button.visibility = View.GONE
+            error_layout.visibility = View.VISIBLE
+            error_txt_cause.text = detectErrorCause(throwable)
+        }
+    }
+
+    private fun hideErrorLayout() {
+        if (error_layout.visibility != View.GONE) {
+            recyclerView.visibility = View.VISIBLE
+            filter_button.visibility = View.VISIBLE
+            error_layout.visibility = View.GONE
+        }
+    }
+
+    private fun detectErrorCause(throwable: Throwable): String {
+        return if (!isNetworkOn()) {
+            "The device has no internet connection"
+        } else if (throwable is TimeoutException) {
+            "The server couldn't send a response"
+        } else {
+            "An unknown network error has occurred"
+        }
+    }
+
+    private fun isNetworkOn(): Boolean {
+        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        return connectivityManager.activeNetworkInfo != null
     }
 
     private fun loadNextPage() {

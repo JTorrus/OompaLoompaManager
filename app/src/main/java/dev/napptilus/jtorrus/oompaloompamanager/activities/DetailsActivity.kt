@@ -37,6 +37,11 @@ class DetailsActivity : AppCompatActivity() {
         retrievedId = getBundledData()
 
         prepareLayout()
+
+        error_btn_retry.setOnClickListener {
+            progressBar.visibility = View.VISIBLE
+            prepareLayout()
+        }
     }
 
     override fun onStop() {
