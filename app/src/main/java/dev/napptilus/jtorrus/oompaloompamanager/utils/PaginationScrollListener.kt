@@ -1,9 +1,8 @@
-package dev.napptilus.jtorrus.oompaloompamanager.Utils
+package dev.napptilus.jtorrus.oompaloompamanager.utils
 
 import android.support.design.widget.FloatingActionButton
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.View
 
 abstract class PaginationScrollListener(val button: FloatingActionButton, val layoutManager: LinearLayoutManager) : RecyclerView.OnScrollListener() {
 

@@ -1,11 +1,10 @@
-package dev.napptilus.jtorrus.oompaloompamanager.Activities
+package dev.napptilus.jtorrus.oompaloompamanager.activities
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
-import dev.napptilus.jtorrus.oompaloompamanager.Api.Client
-import dev.napptilus.jtorrus.oompaloompamanager.Api.Service
-import dev.napptilus.jtorrus.oompaloompamanager.Model.Worker
+import dev.napptilus.jtorrus.oompaloompamanager.api.Client
+import dev.napptilus.jtorrus.oompaloompamanager.api.Service
+import dev.napptilus.jtorrus.oompaloompamanager.model.Worker
 import dev.napptilus.jtorrus.oompaloompamanager.R
 import retrofit2.Call
 import retrofit2.Response

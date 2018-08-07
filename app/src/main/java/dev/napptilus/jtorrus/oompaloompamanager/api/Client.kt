@@ -1,7 +1,5 @@
-package dev.napptilus.jtorrus.oompaloompamanager.Api
+package dev.napptilus.jtorrus.oompaloompamanager.api
 
-import android.content.Context
-import com.google.gson.Gson
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

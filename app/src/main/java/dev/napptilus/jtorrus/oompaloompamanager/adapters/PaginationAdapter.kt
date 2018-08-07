@@ -1,4 +1,4 @@
-package dev.napptilus.jtorrus.oompaloompamanager.Adapters
+package dev.napptilus.jtorrus.oompaloompamanager.adapters
 
 import android.content.Context
 import android.content.Intent
@@ -15,8 +15,8 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import de.hdodenhof.circleimageview.CircleImageView
-import dev.napptilus.jtorrus.oompaloompamanager.Activities.DetailsActivity
-import dev.napptilus.jtorrus.oompaloompamanager.Model.Worker
+import dev.napptilus.jtorrus.oompaloompamanager.activities.DetailsActivity
+import dev.napptilus.jtorrus.oompaloompamanager.model.Worker
 import dev.napptilus.jtorrus.oompaloompamanager.R
 import kotlinx.android.synthetic.main.list_item.view.*
 

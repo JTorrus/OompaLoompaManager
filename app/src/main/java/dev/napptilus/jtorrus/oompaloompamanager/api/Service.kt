@@ -1,8 +1,7 @@
-package dev.napptilus.jtorrus.oompaloompamanager.Api
+package dev.napptilus.jtorrus.oompaloompamanager.api
 
-import android.database.Observable
-import dev.napptilus.jtorrus.oompaloompamanager.Model.Worker
-import dev.napptilus.jtorrus.oompaloompamanager.Model.WorkerResponse
+import dev.napptilus.jtorrus.oompaloompamanager.model.Worker
+import dev.napptilus.jtorrus.oompaloompamanager.model.WorkerResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

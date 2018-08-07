@@ -1,4 +1,4 @@
-package dev.napptilus.jtorrus.oompaloompamanager.Utils
+package dev.napptilus.jtorrus.oompaloompamanager.utils
 
 import android.content.Context
 import android.graphics.Canvas

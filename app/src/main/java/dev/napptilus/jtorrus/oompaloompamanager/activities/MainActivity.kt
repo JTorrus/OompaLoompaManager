@@ -1,4 +1,4 @@
-package dev.napptilus.jtorrus.oompaloompamanager.Activities
+package dev.napptilus.jtorrus.oompaloompamanager.activities
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -8,14 +8,14 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
-import dev.napptilus.jtorrus.oompaloompamanager.Adapters.PaginationAdapter
-import dev.napptilus.jtorrus.oompaloompamanager.Api.Client
-import dev.napptilus.jtorrus.oompaloompamanager.Api.Service
-import dev.napptilus.jtorrus.oompaloompamanager.Model.Worker
-import dev.napptilus.jtorrus.oompaloompamanager.Model.WorkerResponse
+import dev.napptilus.jtorrus.oompaloompamanager.adapters.PaginationAdapter
+import dev.napptilus.jtorrus.oompaloompamanager.api.Client
+import dev.napptilus.jtorrus.oompaloompamanager.api.Service
+import dev.napptilus.jtorrus.oompaloompamanager.model.Worker
+import dev.napptilus.jtorrus.oompaloompamanager.model.WorkerResponse
 import dev.napptilus.jtorrus.oompaloompamanager.R
-import dev.napptilus.jtorrus.oompaloompamanager.Utils.PaginationScrollListener
-import dev.napptilus.jtorrus.oompaloompamanager.Utils.RecyclerItemDivider
+import dev.napptilus.jtorrus.oompaloompamanager.utils.PaginationScrollListener
+import dev.napptilus.jtorrus.oompaloompamanager.utils.RecyclerItemDivider
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
