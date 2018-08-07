@@ -1,8 +1,10 @@
 package dev.napptilus.jtorrus.oompaloompamanager.activities
 
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.View
 import com.bumptech.glide.Glide
 import dev.napptilus.jtorrus.oompaloompamanager.R
 import dev.napptilus.jtorrus.oompaloompamanager.api.Client
@@ -42,28 +44,33 @@ class DetailsActivity : AppCompatActivity() {
     private fun prepareLayout() {
         callWorkerById().enqueue(object : Callback<Worker> {
             override fun onFailure(call: Call<Worker>?, t: Throwable?) {
-                Log.e("Error", t!!.message)
+                /*Snackbar.make(details_layout, "Server can't send a response", Snackbar.LENGTH_INDEFINITE).show()*/
+                details_layout.visibility = View.GONE
             }
 
             override fun onResponse(call: Call<Worker>?, response: Response<Worker>?) {
-                val result = fetchResults(response!!)
-
-                Glide
-                        .with(applicationContext)
-                        .load(result.image)
-                        .into(details_pic)
-
-                details_name.text = applicationContext.getString(R.string.full_name, "${result.firstName}", "${result.lastName}")
-                details_email.text = result.email
-                details_location.text = result.country
-                details_profession.text = result.profession
-                details_gender.text = result.gender
-                details_age.text = result.age.toString()
-                details_height.text = result.height.toString()
-                details_color.text = result.favorite!!["color"]
-                details_food.text = result.favorite!!["food"]
+                populateFields(response)
             }
         })
+    }
+
+    private fun populateFields(response: Response<Worker>?) {
+        val result = fetchResults(response!!)
+
+        Glide
+                .with(applicationContext)
+                .load(result.image)
+                .into(details_pic)
+
+        details_name.text = applicationContext.getString(R.string.full_name, "${result.firstName}", "${result.lastName}")
+        details_email.text = result.email
+        details_location.text = result.country
+        details_profession.text = result.profession
+        details_gender.text = result.gender
+        details_age.text = result.age.toString()
+        details_height.text = result.height.toString()
+        details_color.text = result.favorite!!["color"]
+        details_food.text = result.favorite!!["food"]
     }
 
     private fun getBundledData(): Int {
