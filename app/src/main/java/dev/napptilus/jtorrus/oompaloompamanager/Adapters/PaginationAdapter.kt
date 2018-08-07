@@ -1,7 +1,9 @@
 package dev.napptilus.jtorrus.oompaloompamanager.Adapters
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.drawable.Drawable
+import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +15,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import de.hdodenhof.circleimageview.CircleImageView
+import dev.napptilus.jtorrus.oompaloompamanager.Activities.DetailsActivity
 import dev.napptilus.jtorrus.oompaloompamanager.Model.Worker
 import dev.napptilus.jtorrus.oompaloompamanager.R
 import kotlinx.android.synthetic.main.list_item.view.*
@@ -64,7 +67,6 @@ class PaginationAdapter(val context: Context) : RecyclerView.Adapter<RecyclerVie
 
         if (getItemViewType(position) == ITEM) {
             val workerViewHolder = holder as WorkerViewHolder
-
             workerViewHolder.name.text = context.getString(R.string.full_name, "${result.firstName}", "${result.lastName}")
             workerViewHolder.age.text = result.profession.toString()
             workerViewHolder.country.text = result.country
@@ -82,7 +84,19 @@ class PaginationAdapter(val context: Context) : RecyclerView.Adapter<RecyclerVie
                         }
                     })
                     .into(workerViewHolder.thumbnail)
+
+            workerViewHolder.itemView.setOnClickListener {
+                val intent = Intent(workerViewHolder.itemView.context, DetailsActivity::class.java)
+                val bundle = Bundle()
+
+                bundle.putInt("OompaId", workerResults[position].id!!)
+                intent.putExtras(bundle)
+
+                workerViewHolder.itemView.context.startActivity(intent)
+            }
         }
+
+
     }
 
     private fun getViewHolder(parent: ViewGroup, inflater: LayoutInflater): RecyclerView.ViewHolder {
