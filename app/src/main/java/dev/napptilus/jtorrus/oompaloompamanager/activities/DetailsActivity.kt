@@ -21,7 +21,7 @@ import retrofit2.Response
 
 class DetailsActivity : AppCompatActivity() {
     private lateinit var service: Service
-    var retrievedId: Int? = null
+    private var retrievedId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +31,6 @@ class DetailsActivity : AppCompatActivity() {
         service = Client.getClient()!!.create(Service::class.java)
 
         retrievedId = getBundledData()
-
 
         prepareLayout()
     }
@@ -62,8 +61,9 @@ class DetailsActivity : AppCompatActivity() {
                 details_name.text = applicationContext.getString(R.string.full_name, "${result.firstName}", "${result.lastName}")
                 details_email.text = result.email
                 details_location.text = result.country
+                details_profession.text = result.profession
+                details_age.text = result.age.toString()
             }
-
         })
     }
 
