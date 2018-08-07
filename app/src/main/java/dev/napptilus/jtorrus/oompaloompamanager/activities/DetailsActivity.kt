@@ -1,20 +1,15 @@
 package dev.napptilus.jtorrus.oompaloompamanager.activities
 
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.view.View
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
 import dev.napptilus.jtorrus.oompaloompamanager.R
 import dev.napptilus.jtorrus.oompaloompamanager.api.Client
 import dev.napptilus.jtorrus.oompaloompamanager.api.Service
 import dev.napptilus.jtorrus.oompaloompamanager.model.Worker
 import kotlinx.android.synthetic.main.activity_details.*
+import kotlinx.android.synthetic.main.details_lower_section.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -45,7 +40,7 @@ class DetailsActivity : AppCompatActivity() {
     }
 
     private fun prepareLayout() {
-        callWorkerById().enqueue(object: Callback<Worker> {
+        callWorkerById().enqueue(object : Callback<Worker> {
             override fun onFailure(call: Call<Worker>?, t: Throwable?) {
                 Log.e("Error", t!!.message)
             }
@@ -62,7 +57,11 @@ class DetailsActivity : AppCompatActivity() {
                 details_email.text = result.email
                 details_location.text = result.country
                 details_profession.text = result.profession
+                details_gender.text = result.gender
                 details_age.text = result.age.toString()
+                details_height.text = result.height.toString()
+                details_color.text = result.favorite!!["color"]
+                details_food.text = result.favorite!!["food"]
             }
         })
     }
