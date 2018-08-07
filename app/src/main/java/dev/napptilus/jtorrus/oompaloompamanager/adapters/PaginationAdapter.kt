@@ -2,7 +2,6 @@ package dev.napptilus.jtorrus.oompaloompamanager.adapters
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -10,14 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
 import de.hdodenhof.circleimageview.CircleImageView
+import dev.napptilus.jtorrus.oompaloompamanager.R
 import dev.napptilus.jtorrus.oompaloompamanager.activities.DetailsActivity
 import dev.napptilus.jtorrus.oompaloompamanager.model.Worker
-import dev.napptilus.jtorrus.oompaloompamanager.R
 import kotlinx.android.synthetic.main.list_item.view.*
 
 
@@ -32,7 +27,7 @@ class PaginationAdapter(val context: Context) : RecyclerView.Adapter<RecyclerVie
         class WorkerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             var thumbnail: CircleImageView = itemView.item_thumbnail
             var name: TextView = itemView.item_name
-            var country: TextView = itemView.item_country
+            //var country: TextView = itemView.item_country
             var age: TextView = itemView.item_profession
         }
 
@@ -69,20 +64,11 @@ class PaginationAdapter(val context: Context) : RecyclerView.Adapter<RecyclerVie
             val workerViewHolder = holder as WorkerViewHolder
             workerViewHolder.name.text = context.getString(R.string.full_name, "${result.firstName}", "${result.lastName}")
             workerViewHolder.age.text = result.profession.toString()
-            workerViewHolder.country.text = result.country
+            //workerViewHolder.country.text = result.country
 
             Glide
                     .with(context)
                     .load(result.image)
-                    .listener(object : RequestListener<Drawable> {
-                        override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                            return false
-                        }
-
-                        override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                            return false
-                        }
-                    })
                     .into(workerViewHolder.thumbnail)
 
             workerViewHolder.itemView.setOnClickListener {
