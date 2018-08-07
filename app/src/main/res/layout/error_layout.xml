@@ -14,8 +14,8 @@
         tools:visibility="visible">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="240dp"
+            android:layout_height="240dp"
             android:layout_gravity="center"
             android:src="@drawable/ic_error_chocolate" />
 
@@ -23,8 +23,9 @@
             style="@style/TextAppearance.AppCompat.Subhead"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="16dp"
-            android:text="Oops! There's too much sugar!" />
+            android:text="Oops! Something went wrong!" />
 
 
         <TextView
@@ -33,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            tools:text="The server cannot respond." />
+            android:text="The server cannot respond." />
 
 
         <Button

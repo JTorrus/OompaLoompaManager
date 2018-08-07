@@ -27,7 +27,6 @@ class PaginationAdapter(val context: Context) : RecyclerView.Adapter<RecyclerVie
         class WorkerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             var thumbnail: CircleImageView = itemView.item_thumbnail
             var name: TextView = itemView.item_name
-            //var country: TextView = itemView.item_country
             var age: TextView = itemView.item_profession
         }
 
@@ -64,7 +63,6 @@ class PaginationAdapter(val context: Context) : RecyclerView.Adapter<RecyclerVie
             val workerViewHolder = holder as WorkerViewHolder
             workerViewHolder.name.text = context.getString(R.string.full_name, "${result.firstName}", "${result.lastName}")
             workerViewHolder.age.text = result.profession.toString()
-            //workerViewHolder.country.text = result.country
 
             Glide
                     .with(context)

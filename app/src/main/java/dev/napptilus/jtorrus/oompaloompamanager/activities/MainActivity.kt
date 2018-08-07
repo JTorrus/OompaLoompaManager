@@ -22,11 +22,12 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
-    private val PAGE_START = 1
-    private val PAGE_END = 20
+    private val pageStart = 1
+    private val pageEnd = 20
+
     private var isLoading = false
     private var isLastPage = false
-    private var currentPage = PAGE_START
+    private var currentPage = pageStart
 
     private lateinit var adapter: PaginationAdapter
     private lateinit var linearLayoutManager: LinearLayoutManager
@@ -60,7 +61,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun getTotalPageCount(): Int {
-                return PAGE_END
+                return pageEnd
             }
 
             override fun keepLoading() {
@@ -93,7 +94,7 @@ class MainActivity : AppCompatActivity() {
                 progressBar.visibility = View.GONE
                 adapter.addAll(results)
 
-                if (currentPage <= PAGE_END) {
+                if (currentPage <= pageEnd) {
                     adapter.addLoadingFooter()
                 } else {
                     isLastPage = true
@@ -115,7 +116,7 @@ class MainActivity : AppCompatActivity() {
                 val results: List<Worker> = fetchResults(response!!)
                 adapter.addAll(results)
 
-                if (currentPage != PAGE_END) {
+                if (currentPage != pageEnd) {
                     adapter.addLoadingFooter()
                 } else {
                     isLastPage = true

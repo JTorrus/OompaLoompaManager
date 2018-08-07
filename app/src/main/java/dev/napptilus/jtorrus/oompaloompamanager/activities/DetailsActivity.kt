@@ -1,10 +1,11 @@
 package dev.napptilus.jtorrus.oompaloompamanager.activities
 
+import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.View
+import android.widget.ProgressBar
 import com.bumptech.glide.Glide
 import dev.napptilus.jtorrus.oompaloompamanager.R
 import dev.napptilus.jtorrus.oompaloompamanager.api.Client
@@ -12,24 +13,35 @@ import dev.napptilus.jtorrus.oompaloompamanager.api.Service
 import dev.napptilus.jtorrus.oompaloompamanager.model.Worker
 import kotlinx.android.synthetic.main.activity_details.*
 import kotlinx.android.synthetic.main.details_lower_section.*
+import kotlinx.android.synthetic.main.error_layout.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.concurrent.TimeoutException
 
 class DetailsActivity : AppCompatActivity() {
-    private lateinit var service: Service
     private var retrievedId: Int? = null
+
+    private lateinit var service: Service
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details)
         supportActionBar!!.title = "Details"
 
+        progressBar = details_progress
+
         service = Client.getClient()!!.create(Service::class.java)
 
         retrievedId = getBundledData()
 
         prepareLayout()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        callWorkerById().cancel()
     }
 
     private fun callWorkerById(): Call<Worker> {
@@ -44,14 +56,48 @@ class DetailsActivity : AppCompatActivity() {
     private fun prepareLayout() {
         callWorkerById().enqueue(object : Callback<Worker> {
             override fun onFailure(call: Call<Worker>?, t: Throwable?) {
-                /*Snackbar.make(details_layout, "Server can't send a response", Snackbar.LENGTH_INDEFINITE).show()*/
-                details_layout.visibility = View.GONE
+                progressBar.visibility = View.GONE
+                showErrorLayout(t!!)
             }
 
             override fun onResponse(call: Call<Worker>?, response: Response<Worker>?) {
+                progressBar.visibility = View.GONE
+                hideErrorLayout()
                 populateFields(response)
             }
         })
+    }
+
+    private fun showErrorLayout(throwable: Throwable) {
+        if (error_layout.visibility == View.GONE) {
+            appbar_layout.visibility = View.GONE
+            lower_section_layout.visibility = View.GONE
+            error_layout.visibility = View.VISIBLE
+            error_txt_cause.text = detectErrorCause(throwable)
+        }
+    }
+
+    private fun detectErrorCause(throwable: Throwable): String {
+        return if (!isNetworkOn()) {
+            "The device has no internet connection"
+        } else if (throwable is TimeoutException) {
+            "The server couldn't send a response"
+        } else {
+            "An unknown network error has occurred"
+        }
+    }
+
+    private fun hideErrorLayout() {
+        if (error_layout.visibility != View.GONE) {
+            appbar_layout.visibility = View.VISIBLE
+            lower_section_layout.visibility = View.VISIBLE
+            error_layout.visibility = View.GONE
+        }
+    }
+
+    private fun isNetworkOn(): Boolean {
+        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        return connectivityManager.activeNetworkInfo != null
     }
 
     private fun populateFields(response: Response<Worker>?) {
