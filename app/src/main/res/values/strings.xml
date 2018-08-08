@@ -25,4 +25,19 @@
     <string name="lay_txt_err">Oops! Something went wrong!</string>
     <string name="cause_ph">The server cannot respond.</string>
     <string name="txt_retry">Retry</string>
+    
+    <string-array name="gender_filters">
+        <item>All</item>
+        <item>Female</item>
+        <item>Male</item>
+    </string-array>
+
+    <string-array name="profession_filters">
+        <item>All</item>
+        <item>Brewer</item>
+        <item>Developer</item>
+        <item>Gemcutter</item>
+        <item>Medic</item>
+        <item>Metalworker</item>
+    </string-array>
 </resources>

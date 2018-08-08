@@ -1,5 +1,6 @@
 package dev.napptilus.jtorrus.oompaloompamanager.activities
 
+import android.app.FragmentManager
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Bundle
@@ -13,6 +14,7 @@ import dev.napptilus.jtorrus.oompaloompamanager.R
 import dev.napptilus.jtorrus.oompaloompamanager.adapters.PaginationAdapter
 import dev.napptilus.jtorrus.oompaloompamanager.api.Client
 import dev.napptilus.jtorrus.oompaloompamanager.api.Service
+import dev.napptilus.jtorrus.oompaloompamanager.fragments.FilterDialog
 import dev.napptilus.jtorrus.oompaloompamanager.model.Worker
 import dev.napptilus.jtorrus.oompaloompamanager.model.WorkerResponse
 import dev.napptilus.jtorrus.oompaloompamanager.utils.PaginationAdapterCallback
@@ -101,7 +103,9 @@ class MainActivity : AppCompatActivity(), PaginationAdapterCallback {
 
     private fun enableFabControls() {
         filter_button.setOnClickListener {
-            TODO()
+            val dialog = FilterDialog()
+
+            dialog.show(supportFragmentManager, "FilterDialog")
         }
     }
 
