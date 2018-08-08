@@ -25,7 +25,10 @@
     <string name="lay_txt_err">Oops! Something went wrong!</string>
     <string name="cause_ph">The server cannot respond.</string>
     <string name="txt_retry">Retry</string>
-    
+    <string name="title_fil_dialog">Filters</string>
+    <string name="positive_button">Ok</string>
+    <string name="negative_button">Cancel</string>
+
     <string-array name="gender_filters">
         <item>All</item>
         <item>Female</item>

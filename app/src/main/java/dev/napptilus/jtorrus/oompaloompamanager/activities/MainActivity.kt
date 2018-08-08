@@ -4,12 +4,14 @@ import android.app.FragmentManager
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Bundle
+import android.support.v4.app.DialogFragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ProgressBar
+import android.widget.Toast
 import dev.napptilus.jtorrus.oompaloompamanager.R
 import dev.napptilus.jtorrus.oompaloompamanager.adapters.PaginationAdapter
 import dev.napptilus.jtorrus.oompaloompamanager.api.Client
@@ -27,7 +29,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.concurrent.TimeoutException
 
-class MainActivity : AppCompatActivity(), PaginationAdapterCallback {
+class MainActivity : AppCompatActivity(), PaginationAdapterCallback, FilterDialog.FilterDialogListener {
     private val pageStart = 1
     private val pageEnd = 20
 
@@ -40,6 +42,15 @@ class MainActivity : AppCompatActivity(), PaginationAdapterCallback {
     private lateinit var recyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar
     private lateinit var service: Service
+    private lateinit var dialog: FilterDialog
+
+    override fun onDialogPositiveClick(dialog: DialogFragment) {
+        Toast.makeText(this, "He dado al ok", Toast.LENGTH_LONG).show()
+    }
+
+    override fun onDialogNegativeClick(dialog: DialogFragment) {
+        Toast.makeText(this, "He dado al cancel", Toast.LENGTH_LONG).show()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -103,8 +114,7 @@ class MainActivity : AppCompatActivity(), PaginationAdapterCallback {
 
     private fun enableFabControls() {
         filter_button.setOnClickListener {
-            val dialog = FilterDialog()
-
+            dialog = FilterDialog()
             dialog.show(supportFragmentManager, "FilterDialog")
         }
     }
