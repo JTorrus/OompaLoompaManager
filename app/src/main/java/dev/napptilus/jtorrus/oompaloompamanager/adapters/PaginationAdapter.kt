@@ -28,8 +28,8 @@ class PaginationAdapter(val context: Context) : RecyclerView.Adapter<RecyclerVie
     private var paginationCallback: PaginationAdapterCallback = context as PaginationAdapterCallback
 
     companion object {
-        private val ITEM = 0
-        private val LOADING = 1
+        private const val ITEM = 0
+        private const val LOADING = 1
 
         class WorkerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             var thumbnail: CircleImageView = itemView.item_thumbnail
@@ -134,6 +134,22 @@ class PaginationAdapter(val context: Context) : RecyclerView.Adapter<RecyclerVie
 
     fun getItem(position: Int): Worker {
         return workerResults[position]
+    }
+
+    fun clear() {
+        isLoadingAdded = false
+        while (itemCount > 0) {
+            remove(workerResults[0])
+        }
+    }
+
+    fun remove(worker: Worker) {
+        val position = workerResults.indexOf(worker)
+
+        if (position > -1) {
+            workerResults.removeAt(position)
+            notifyItemRemoved(position)
+        }
     }
 
     fun showRetry(isShown: Boolean, message: String?) {

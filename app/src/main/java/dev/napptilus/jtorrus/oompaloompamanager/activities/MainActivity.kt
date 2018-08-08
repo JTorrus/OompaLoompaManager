@@ -1,6 +1,5 @@
 package dev.napptilus.jtorrus.oompaloompamanager.activities
 
-import android.app.FragmentManager
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Bundle
@@ -11,7 +10,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ProgressBar
-import android.widget.Toast
 import dev.napptilus.jtorrus.oompaloompamanager.R
 import dev.napptilus.jtorrus.oompaloompamanager.adapters.PaginationAdapter
 import dev.napptilus.jtorrus.oompaloompamanager.api.Client
@@ -36,6 +34,8 @@ class MainActivity : AppCompatActivity(), PaginationAdapterCallback, FilterDialo
     private var isLoading = false
     private var isLastPage = false
     private var currentPage = pageStart
+    private var genderSelection: String = "all"
+    private var professionSelection: String = "all"
 
     private lateinit var adapter: PaginationAdapter
     private lateinit var linearLayoutManager: LinearLayoutManager
@@ -43,13 +43,38 @@ class MainActivity : AppCompatActivity(), PaginationAdapterCallback, FilterDialo
     private lateinit var progressBar: ProgressBar
     private lateinit var service: Service
     private lateinit var dialog: FilterDialog
+    private lateinit var results: List<Worker>
 
-    override fun onDialogPositiveClick(dialog: DialogFragment) {
-        Toast.makeText(this, "He dado al ok", Toast.LENGTH_LONG).show()
+    override fun onDialogPositiveClick(dialog: DialogFragment, genderSelection: String, professionSelection: String) {
+        loadFirstPage()
+        this.genderSelection = genderSelection
+        this.professionSelection = professionSelection
+    }
+
+    private fun filterCheck(genderSelection: String, professionSelection: String) {
+        if (genderSelection.trim().toLowerCase() == "all" && professionSelection.trim().toLowerCase() != "all") {
+            for (result in results) {
+                if (professionSelection.trim().toLowerCase() != result.profession!!.trim().toLowerCase()) {
+                    adapter.remove(result)
+                }
+            }
+        } else if (genderSelection.trim().toLowerCase() != "all" && professionSelection.trim().toLowerCase() == "all") {
+            for (result in results) {
+                if (genderSelection.trim().first().toLowerCase().toString() != result.gender!!.trim().toLowerCase()) {
+                    adapter.remove(result)
+                }
+            }
+        } else if (genderSelection.trim().toLowerCase() != "all" && professionSelection.trim().toLowerCase() != "all") {
+            for (result in results) {
+                if ((genderSelection.trim().first().toLowerCase().toString() != result.gender!!.trim().toLowerCase()) || (professionSelection.trim().toLowerCase() != result.profession!!.trim().toLowerCase())) {
+                    adapter.remove(result)
+                }
+            }
+        }
     }
 
     override fun onDialogNegativeClick(dialog: DialogFragment) {
-        Toast.makeText(this, "He dado al cancel", Toast.LENGTH_LONG).show()
+        dialog.dismiss()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,7 +99,9 @@ class MainActivity : AppCompatActivity(), PaginationAdapterCallback, FilterDialo
     }
 
     override fun retryPageLoad() {
-        loadNextPage()
+        if (genderSelection == "all" && professionSelection == "all") {
+            loadNextPage()
+        }
     }
 
     private fun prepareRecycler() {
@@ -97,11 +124,12 @@ class MainActivity : AppCompatActivity(), PaginationAdapterCallback, FilterDialo
             }
 
             override fun keepLoading() {
-                isLoading = true
-                currentPage += 1
-                loadNextPage()
+                if (genderSelection == "all" && professionSelection == "all") {
+                    isLoading = true
+                    currentPage += 1
+                    loadNextPage()
+                }
             }
-
         })
     }
 
@@ -115,31 +143,22 @@ class MainActivity : AppCompatActivity(), PaginationAdapterCallback, FilterDialo
     private fun enableFabControls() {
         filter_button.setOnClickListener {
             dialog = FilterDialog()
+
+            val args = Bundle()
+            args.putInt("genderPos", resources.getStringArray(R.array.gender_filters).indexOf(genderSelection))
+            args.putInt("profPos", resources.getStringArray(R.array.profession_filters).indexOf(professionSelection))
+
+            dialog.arguments = args
             dialog.show(supportFragmentManager, "FilterDialog")
         }
     }
 
     private fun loadFirstPage() {
-        callWorkers().enqueue(object : Callback<WorkerResponse> {
-            override fun onFailure(call: Call<WorkerResponse>?, t: Throwable?) {
-                progressBar.visibility = View.GONE
-                showErrorLayout(t!!)
-            }
+        if (currentPage != pageStart) {
+            currentPage = pageStart
+        }
 
-            override fun onResponse(call: Call<WorkerResponse>?, response: Response<WorkerResponse>?) {
-                val results: List<Worker> = fetchResults(response!!)
-
-                progressBar.visibility = View.GONE
-                hideErrorLayout()
-                adapter.addAll(results)
-
-                if (currentPage <= pageEnd) {
-                    adapter.addLoadingFooter()
-                } else {
-                    isLastPage = true
-                }
-            }
-        })
+        firstResponseCallback()
     }
 
     private fun showErrorLayout(throwable: Throwable) {
@@ -175,6 +194,36 @@ class MainActivity : AppCompatActivity(), PaginationAdapterCallback, FilterDialo
     }
 
     private fun loadNextPage() {
+        nextResponseCallback()
+    }
+
+    private fun firstResponseCallback() {
+        callWorkers().enqueue(object : Callback<WorkerResponse> {
+            override fun onFailure(call: Call<WorkerResponse>?, t: Throwable?) {
+                progressBar.visibility = View.GONE
+                showErrorLayout(t!!)
+            }
+
+            override fun onResponse(call: Call<WorkerResponse>?, response: Response<WorkerResponse>?) {
+                adapter.clear()
+                results = fetchResults(response!!)
+
+                progressBar.visibility = View.GONE
+                hideErrorLayout()
+                adapter.addAll(results)
+
+                filterCheck(genderSelection, professionSelection)
+
+                if (currentPage <= pageEnd) {
+                    adapter.addLoadingFooter()
+                } else {
+                    isLastPage = true
+                }
+            }
+        })
+    }
+
+    private fun nextResponseCallback() {
         callWorkers().enqueue(object : Callback<WorkerResponse> {
             override fun onFailure(call: Call<WorkerResponse>?, t: Throwable?) {
                 adapter.showRetry(true, detectErrorCause(t!!))
@@ -184,7 +233,7 @@ class MainActivity : AppCompatActivity(), PaginationAdapterCallback, FilterDialo
                 adapter.removeLoadingFooter()
                 isLoading = false
 
-                val results: List<Worker> = fetchResults(response!!)
+                results = fetchResults(response!!)
                 adapter.addAll(results)
 
                 if (currentPage != pageEnd) {
@@ -193,7 +242,6 @@ class MainActivity : AppCompatActivity(), PaginationAdapterCallback, FilterDialo
                     isLastPage = true
                 }
             }
-
         })
     }
 
