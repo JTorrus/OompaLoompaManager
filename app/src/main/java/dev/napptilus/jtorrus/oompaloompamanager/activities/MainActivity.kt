@@ -16,6 +16,7 @@ import dev.napptilus.jtorrus.oompaloompamanager.api.Client
 import dev.napptilus.jtorrus.oompaloompamanager.api.Service
 import dev.napptilus.jtorrus.oompaloompamanager.model.Worker
 import dev.napptilus.jtorrus.oompaloompamanager.model.WorkerResponse
+import dev.napptilus.jtorrus.oompaloompamanager.utils.PaginationAdapterCallback
 import dev.napptilus.jtorrus.oompaloompamanager.utils.PaginationScrollListener
 import dev.napptilus.jtorrus.oompaloompamanager.utils.RecyclerItemDivider
 import kotlinx.android.synthetic.main.activity_main.*
@@ -25,7 +26,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.concurrent.TimeoutException
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), PaginationAdapterCallback {
     private val pageStart = 1
     private val pageEnd = 20
 
@@ -45,11 +46,26 @@ class MainActivity : AppCompatActivity() {
 
         recyclerView = workers_recycler
         progressBar = main_progress
-
         adapter = PaginationAdapter(this)
-
         linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        service = Client.getClient()!!.create(Service::class.java)
 
+        prepareRecycler()
+        loadFirstPage()
+        enableRetryControls()
+        enableFabControls()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        callWorkers().cancel()
+    }
+
+    override fun retryPageLoad() {
+        loadNextPage()
+    }
+
+    private fun prepareRecycler() {
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.itemAnimator = DefaultItemAnimator()
         recyclerView.addItemDecoration(RecyclerItemDivider(applicationContext))
@@ -75,20 +91,19 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
+    }
 
-        service = Client.getClient()!!.create(Service::class.java)
-
-        loadFirstPage()
-
+    private fun enableRetryControls() {
         error_btn_retry.setOnClickListener {
             progressBar.visibility = View.VISIBLE
             loadFirstPage()
         }
     }
 
-    override fun onStop() {
-        super.onStop()
-        callWorkers().cancel()
+    private fun enableFabControls() {
+        filter_button.setOnClickListener {
+            TODO()
+        }
     }
 
     private fun loadFirstPage() {
@@ -149,7 +164,7 @@ class MainActivity : AppCompatActivity() {
     private fun loadNextPage() {
         callWorkers().enqueue(object : Callback<WorkerResponse> {
             override fun onFailure(call: Call<WorkerResponse>?, t: Throwable?) {
-                Log.e("Error", t!!.localizedMessage)
+                adapter.showRetry(true, detectErrorCause(t!!))
             }
 
             override fun onResponse(call: Call<WorkerResponse>?, response: Response<WorkerResponse>?) {
