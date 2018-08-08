@@ -28,6 +28,8 @@
     <string name="title_fil_dialog">Filters</string>
     <string name="positive_button">Ok</string>
     <string name="negative_button">Cancel</string>
+    <string name="spin_genre_ph">Genre</string>
+    <string name="spin_prof_ph">Profession</string>
 
     <string-array name="gender_filters">
         <item>All</item>

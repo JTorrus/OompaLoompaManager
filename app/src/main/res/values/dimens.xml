@@ -64,4 +64,16 @@
     <dimen name="margin_st_profession">24dp</dimen>
     <dimen name="margin_top_profession">8dp</dimen>
     <dimen name="it_cardview_height">120dp</dimen>
+    <dimen name="err_img_width">240dp</dimen>
+    <dimen name="err_img_height">240dp</dimen>
+    <dimen name="margin_top_txt_sub">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="margin_st_genre_ph">32dp</dimen>
+    <dimen name="margin_top_genre_ph">32dp</dimen>
+    <dimen name="margin_end_gender_spin">8dp</dimen>
+    <dimen name="margin_top_gender_spin">32dp</dimen>
+    <dimen name="margin_st_prof_ph">32dp</dimen>
+    <dimen name="margin_top_prof_ph">32dp</dimen>
+    <dimen name="margin_end_prof_spin">8dp</dimen>
+    <dimen name="margin_top_prof_spin">24dp</dimen>
 </resources>

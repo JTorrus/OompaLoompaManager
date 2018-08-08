@@ -14,8 +14,8 @@
         tools:visibility="visible">
 
         <ImageView
-            android:layout_width="240dp"
-            android:layout_height="240dp"
+            android:layout_width="@dimen/err_img_width"
+            android:layout_height="@dimen/err_img_height"
             android:layout_gravity="center"
             android:src="@drawable/ic_error_chocolate" />
 
@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/margin_top_txt_sub"
             android:text="@string/lay_txt_err" />
 
 
