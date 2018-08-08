@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="120dp">
+    android:layout_height="@dimen/it_cardview_height">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -11,12 +11,11 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/item_thumbnail"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_width="@dimen/width_thumbnail"
+            android:layout_height="@dimen/height_thumbnail"
+            android:layout_marginBottom="@dimen/margin_bot_thumbnail"
+            android:layout_marginStart="@dimen/margin_st_thumbnail"
+            android:layout_marginTop="@dimen/margin_top_thumbnail"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -25,11 +24,11 @@
             android:id="@+id/item_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="32dp"
-            android:text="Name"
+            android:layout_marginStart="@dimen/margin_st_name"
+            android:layout_marginTop="@dimen/margin_top_name"
+            android:text="@string/name_ph"
             android:textColor="@color/colorAccent"
-            android:textSize="16sp"
+            android:textSize="@dimen/txtsize_name"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/item_thumbnail"
             app:layout_constraintTop_toTopOf="parent" />
@@ -38,22 +37,10 @@
             android:id="@+id/item_profession"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
-            android:text="Profession"
+            android:layout_marginStart="@dimen/margin_st_profession"
+            android:layout_marginTop="@dimen/margin_top_profession"
+            android:text="@string/profession_ph"
             app:layout_constraintStart_toEndOf="@+id/item_thumbnail"
             app:layout_constraintTop_toBottomOf="@+id/item_name" />
-
-        <!--<TextView
-            android:id="@+id/item_country"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
-            android:text="Country"
-            app:layout_constraintStart_toEndOf="@+id/item_thumbnail"
-            app:layout_constraintTop_toBottomOf="@+id/item_name" />-->
-
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

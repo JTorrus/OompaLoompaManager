@@ -28,20 +28,14 @@ class DetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details)
-        supportActionBar!!.title = "Details"
+        supportActionBar!!.title = getString(R.string.title_det_toolbar)
 
         progressBar = details_progress
-
         service = Client.getClient()!!.create(Service::class.java)
-
         retrievedId = getBundledData()
 
         prepareLayout()
-
-        error_btn_retry.setOnClickListener {
-            progressBar.visibility = View.VISIBLE
-            prepareLayout()
-        }
+        enableRetryControls()
     }
 
     override fun onStop() {
@@ -73,6 +67,13 @@ class DetailsActivity : AppCompatActivity() {
         })
     }
 
+    private fun enableRetryControls() {
+        error_btn_retry.setOnClickListener {
+            progressBar.visibility = View.VISIBLE
+            prepareLayout()
+        }
+    }
+
     private fun showErrorLayout(throwable: Throwable) {
         if (error_layout.visibility == View.GONE) {
             appbar_layout.visibility = View.GONE
@@ -84,11 +85,11 @@ class DetailsActivity : AppCompatActivity() {
 
     private fun detectErrorCause(throwable: Throwable): String {
         return if (!isNetworkOn()) {
-            "The device has no internet connection"
+            getString(R.string.err_internet)
         } else if (throwable is TimeoutException) {
-            "The server couldn't send a response"
+            getString(R.string.err_response)
         } else {
-            "An unknown network error has occurred"
+            getString(R.string.err_unkn)
         }
     }
 
@@ -125,6 +126,6 @@ class DetailsActivity : AppCompatActivity() {
     }
 
     private fun getBundledData(): Int {
-        return intent.extras["OompaId"] as Int
+        return intent.extras[getString(R.string.id_bundle_oompa)] as Int
     }
 }

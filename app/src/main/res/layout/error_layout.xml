@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
-            android:text="Oops! Something went wrong!" />
+            android:text="@string/lay_txt_err" />
 
 
         <TextView
@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="The server cannot respond." />
+            android:text="@string/cause_ph" />
 
 
         <Button
@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Retry"
+            android:text="@string/txt_retry"
             android:textColor="@color/colorPrimary" />
 
     </LinearLayout>

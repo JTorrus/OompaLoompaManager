@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView
 import dev.napptilus.jtorrus.oompaloompamanager.R
 
 class RecyclerItemDivider(context: Context): RecyclerView.ItemDecoration() {
-    var mDivider: Drawable = ContextCompat.getDrawable(context, R.drawable.line_divider)!!
+    private var mDivider: Drawable = ContextCompat.getDrawable(context, R.drawable.line_divider)!!
 
     override fun onDrawOver(c: Canvas?, parent: RecyclerView?, state: RecyclerView.State?) {
         parent?.let {

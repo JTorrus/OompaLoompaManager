@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import dev.napptilus.jtorrus.oompaloompamanager.R
@@ -148,11 +147,11 @@ class MainActivity : AppCompatActivity(), PaginationAdapterCallback {
 
     private fun detectErrorCause(throwable: Throwable): String {
         return if (!isNetworkOn()) {
-            "The device has no internet connection"
+            getString(R.string.err_internet)
         } else if (throwable is TimeoutException) {
-            "The server couldn't send a response"
+            getString(R.string.err_response)
         } else {
-            "An unknown network error has occurred"
+            getString(R.string.err_unkn)
         }
     }
 

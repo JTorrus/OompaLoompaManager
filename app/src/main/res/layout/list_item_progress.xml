@@ -14,12 +14,12 @@
 
         <ImageButton
             android:id="@+id/loadmore_retry"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/ic_retry_width"
+            android:layout_height="@dimen/ic_retry_height"
             android:layout_gravity="center"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="@dimen/margin_bot_ic_retry"
+            android:layout_marginStart="@dimen/margin_st_ic_retry"
+            android:layout_marginTop="@dimen/margin_top_ic_retry"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_refresh"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -30,9 +30,9 @@
             android:id="@+id/loadmore_errortxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
-            android:text="What went wrong"
+            android:layout_marginStart="@dimen/margin_st_txt_err"
+            android:layout_marginTop="@dimen/margin_top_txt_err"
+            android:text="@string/err_ph"
             app:layout_constraintStart_toEndOf="@+id/loadmore_retry"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -40,9 +40,9 @@
             android:id="@+id/retry_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="32dp"
-            android:text="Tap to retry"
+            android:layout_marginBottom="@dimen/margin_bot_txt_err"
+            android:layout_marginStart="@dimen/margin_st_txt_err"
+            android:text="@string/tap_to_retry"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/loadmore_retry" />

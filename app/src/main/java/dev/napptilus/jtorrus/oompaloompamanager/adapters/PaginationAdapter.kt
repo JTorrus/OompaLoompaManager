@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import android.widget.LinearLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import de.hdodenhof.circleimageview.CircleImageView
@@ -79,7 +78,7 @@ class PaginationAdapter(val context: Context) : RecyclerView.Adapter<RecyclerVie
                 val intent = Intent(workerViewHolder.itemView.context, DetailsActivity::class.java)
                 val bundle = Bundle()
 
-                bundle.putInt("OompaId", workerResults[position].id!!)
+                bundle.putInt(context.getString(R.string.id_bundle_oompa), workerResults[position].id!!)
                 intent.putExtras(bundle)
 
                 workerViewHolder.itemView.context.startActivity(intent)
@@ -93,7 +92,7 @@ class PaginationAdapter(val context: Context) : RecyclerView.Adapter<RecyclerVie
                 loadingViewHolder.errorText.text = if (errorMessage != null) {
                     errorMessage
                 } else {
-                    "An unknown network error has occurred"
+                    context.getString(R.string.err_unkn)
                 }
             } else {
                 loadingViewHolder.errorLayout.visibility = View.GONE

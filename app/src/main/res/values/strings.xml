@@ -2,4 +2,27 @@
     <string name="app_name">OompaLoompaManager</string>
     <string name="full_name">%1$s %2$s</string>
     <string name="filters">Filters</string>
+    <string name="err_internet">The device has no internet connection</string>
+    <string name="err_response">The server couldn\'t send a response</string>
+    <string name="err_unkn">An unknown network error has occurred</string>
+    <string name="title_det_toolbar">Details</string>
+    <string name="id_bundle_oompa">OompaId</string>
+    <string name="details_name_ph">Name</string>
+    <string name="details_email_ph">Email</string>
+    <string name="details_location_ph">Location</string>
+    <string name="details_profession_ph">Profession</string>
+    <string name="title_add_info_details">Additional Info</string>
+    <string name="title_age_info_details">Age</string>
+    <string name="title_height_info_details">Height</string>
+    <string name="title_gender_info_details">Gender</string>
+    <string name="title_interests_info_details">Interests</string>
+    <string name="title_color_info_details">Color</string>
+    <string name="title_food_info_details">Food</string>
+    <string name="err_ph">Something went wrong</string>
+    <string name="tap_to_retry">Tap to retry</string>
+    <string name="profession_ph">Profession</string>
+    <string name="name_ph">Name</string>
+    <string name="lay_txt_err">Oops! Something went wrong!</string>
+    <string name="cause_ph">The server cannot respond.</string>
+    <string name="txt_retry">Retry</string>
 </resources>
