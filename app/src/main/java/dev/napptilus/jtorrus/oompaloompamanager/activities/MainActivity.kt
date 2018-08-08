@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
@@ -44,6 +45,7 @@ class MainActivity : AppCompatActivity(), PaginationAdapterCallback, FilterDialo
     private lateinit var service: Service
     private lateinit var dialog: FilterDialog
     private lateinit var results: List<Worker>
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     override fun onDialogPositiveClick(dialog: DialogFragment, genderSelection: String, professionSelection: String) {
         loadFirstPage()
@@ -85,11 +87,14 @@ class MainActivity : AppCompatActivity(), PaginationAdapterCallback, FilterDialo
         progressBar = main_progress
         adapter = PaginationAdapter(this)
         linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        swipeRefreshLayout = swipe_refresh
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent)
         service = Client.getClient()!!.create(Service::class.java)
 
         prepareRecycler()
         loadFirstPage()
         enableRetryControls()
+        setSwipeRefreshLayoutListener()
         enableFabControls()
     }
 
@@ -99,9 +104,7 @@ class MainActivity : AppCompatActivity(), PaginationAdapterCallback, FilterDialo
     }
 
     override fun retryPageLoad() {
-        if (genderSelection == "all" && professionSelection == "all") {
-            loadNextPage()
-        }
+        loadNextPage()
     }
 
     private fun prepareRecycler() {
@@ -124,13 +127,19 @@ class MainActivity : AppCompatActivity(), PaginationAdapterCallback, FilterDialo
             }
 
             override fun keepLoading() {
-                if (genderSelection == "all" && professionSelection == "all") {
-                    isLoading = true
-                    currentPage += 1
-                    loadNextPage()
-                }
+                isLoading = true
+                currentPage += 1
+                loadNextPage()
             }
         })
+    }
+
+    private fun setSwipeRefreshLayoutListener() {
+        swipeRefreshLayout.setOnRefreshListener {
+            genderSelection= "all"
+            professionSelection = "all"
+            loadFirstPage()
+        }
     }
 
     private fun enableRetryControls() {
@@ -201,12 +210,14 @@ class MainActivity : AppCompatActivity(), PaginationAdapterCallback, FilterDialo
         callWorkers().enqueue(object : Callback<WorkerResponse> {
             override fun onFailure(call: Call<WorkerResponse>?, t: Throwable?) {
                 progressBar.visibility = View.GONE
+                swipeRefreshLayout.isRefreshing = false
                 showErrorLayout(t!!)
             }
 
             override fun onResponse(call: Call<WorkerResponse>?, response: Response<WorkerResponse>?) {
                 adapter.clear()
                 results = fetchResults(response!!)
+                swipeRefreshLayout.isRefreshing = false
 
                 progressBar.visibility = View.GONE
                 hideErrorLayout()
