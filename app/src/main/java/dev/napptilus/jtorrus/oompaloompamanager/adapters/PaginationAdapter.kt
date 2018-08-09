@@ -19,7 +19,11 @@ import dev.napptilus.jtorrus.oompaloompamanager.utils.PaginationAdapterCallback
 import kotlinx.android.synthetic.main.list_item.view.*
 import kotlinx.android.synthetic.main.list_item_progress.view.*
 
-
+/**
+ * Adapter for the RecyclerView using ViewHolder pattern
+ *
+ * We have two ViewHolders: [WorkerViewHolder] and [LoadingViewHolder]. Depending on which state (LOADING OR LOADED) the adapter will return the corresponding ViewHolder
+ */
 class PaginationAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var workerResults: ArrayList<Worker> = ArrayList()
     private var isLoadingAdded = false
@@ -31,6 +35,9 @@ class PaginationAdapter(val context: Context) : RecyclerView.Adapter<RecyclerVie
         private const val ITEM = 0
         private const val LOADING = 1
 
+        /**
+         * ViewHolder that holds the view of a single [Worker]
+         */
         class WorkerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             var thumbnail: CircleImageView = itemView.item_thumbnail
             var name: TextView = itemView.item_name
@@ -61,6 +68,11 @@ class PaginationAdapter(val context: Context) : RecyclerView.Adapter<RecyclerVie
         return if (position == workerResults.size - 1 && isLoadingAdded) LOADING else ITEM
     }
 
+    /**
+     * Depending on the app's state we populate the ViewHolder with [Worker] data fetched from the API or we display the ViewHolder of the ProgressBar
+     *
+     * We also set a Listener to each item to see its details if its clicked. We pass the [Worker.id] as argument for being able to make the corresponding Request in [DetailsActivity]
+     */
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val result: Worker = workerResults[position]
 
@@ -106,6 +118,9 @@ class PaginationAdapter(val context: Context) : RecyclerView.Adapter<RecyclerVie
         return WorkerViewHolder(view)
     }
 
+    /**
+     * Helper methods to manipulate items inside the adapter's results
+     */
     fun add(worker: Worker) {
         workerResults.add(worker)
         notifyItemInserted(workerResults.size - 1)
@@ -161,6 +176,9 @@ class PaginationAdapter(val context: Context) : RecyclerView.Adapter<RecyclerVie
         }
     }
 
+    /**
+     * ViewHolder that holds the view of the progress bar when recycler has to load more items
+     */
     inner class LoadingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         override fun onClick(v: View?) {
             showRetry(false, errorText.text.toString())

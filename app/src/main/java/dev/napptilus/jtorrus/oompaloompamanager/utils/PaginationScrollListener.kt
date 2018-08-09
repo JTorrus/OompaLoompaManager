@@ -4,8 +4,14 @@ import android.support.design.widget.FloatingActionButton
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 
+/**
+ * Listener that checks when user scrolls the RecyclerView
+ */
 abstract class PaginationScrollListener(val button: FloatingActionButton, val layoutManager: LinearLayoutManager) : RecyclerView.OnScrollListener() {
 
+    /**
+     * In the OnScrolled method we check when the app should load more items and hide/show the [FloatingActionButton]
+     */
     override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
 

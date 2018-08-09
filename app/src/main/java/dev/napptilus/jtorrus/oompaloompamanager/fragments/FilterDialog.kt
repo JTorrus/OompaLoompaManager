@@ -12,6 +12,13 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import dev.napptilus.jtorrus.oompaloompamanager.R
 
+/**
+ * Fragment that displays a Dialog for filtering purposes
+ *
+ * This class handles all user's filter operations through a DialogFragment extended class, it also has a Listener to define App's behavior when one of the control buttons is pressed
+ *
+ * @author Javier Torrus
+ */
 class FilterDialog : DialogFragment() {
     interface FilterDialogListener {
         fun onDialogPositiveClick(dialog: DialogFragment, genderSelection: String, professionSelection: String)
@@ -26,6 +33,11 @@ class FilterDialog : DialogFragment() {
     var genderPosition: Int = 0
     var professionPosition: Int = 0
 
+    /**
+     * In our OnCreateDialog method we instantiate the [LayoutInflater] and prepare the inflated custom view
+     *
+     * We create the DialogFragment with a Builder
+     */
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(context!!)
         inflater = activity!!.layoutInflater
@@ -51,6 +63,9 @@ class FilterDialog : DialogFragment() {
         listener = context as FilterDialogListener
     }
 
+    /**
+     * We get activity's arguments (last selected spinner's option) to define which option has to be selected by default in both of the spinners when DialogFragment pops up
+     */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val genderSpinner = dialogLayout.findViewById<AppCompatSpinner>(R.id.gender_spinner)
         val professionSpinner = dialogLayout.findViewById<AppCompatSpinner>(R.id.profession_spinner)
@@ -64,6 +79,9 @@ class FilterDialog : DialogFragment() {
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
+    /**
+     * We set in both of the spinners a Listener for getting notified when one of their options is changed
+     */
     private fun setSpinnerListeners() {
         val genderSpinner = dialogLayout.findViewById<AppCompatSpinner>(R.id.gender_spinner)
         val professionSpinner = dialogLayout.findViewById<AppCompatSpinner>(R.id.profession_spinner)
